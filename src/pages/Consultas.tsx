@@ -8,14 +8,23 @@ import Loading from '../components/Loading'
 import StatusBadge from '../components/StatusBadge'
 import { useFetch } from '../hooks/useFetch'
 import { listarConsultas } from '../services/consultas'
+import { listarPacientes } from '../services/pacientes'
+import { listarUnidades } from '../services/unidades'
 import { STATUS_CONSULTA, type StatusConsulta } from '../types/consulta'
 import { ROTULO_STATUS, formatarDataHora, rotuloTransporte } from '../utils/formatar'
 
 export default function Consultas() {
-  const { dados, carregando, erro, recarregar } = useFetch(listarConsultas)
+  // Cruza as consultas com pacientes e unidades para mostrar nomes em vez de códigos.
+  const { dados, carregando, erro, recarregar } = useFetch(() =>
+    Promise.all([listarConsultas(), listarPacientes(), listarUnidades()]),
+  )
   const [filtro, setFiltro] = useState<StatusConsulta | 'TODOS'>('TODOS')
 
-  const consultas = (dados ?? []).filter((c) => filtro === 'TODOS' || c.status === filtro)
+  const [todas, pacientes, unidades] = dados ?? [[], [], []]
+  const nomePaciente = (id: number) => pacientes.find((p) => p.id === id)?.nome ?? `Paciente ${id}`
+  const nomeUnidade = (id: number) => unidades.find((u) => u.id === id)?.nome ?? `Unidade ${id}`
+
+  const consultas = todas.filter((c) => filtro === 'TODOS' || c.status === filtro)
   const vans = consultas.filter((c) => c.precisaTransporte === 'S' && c.status !== 'CANCELADA').length
 
   return (
@@ -66,7 +75,12 @@ export default function Consultas() {
             {/* Cards no mobile */}
             <div className="grid gap-3 md:hidden">
               {consultas.map((c) => (
-                <ConsultaCard key={c.idConsulta} consulta={c} />
+                <ConsultaCard
+                  key={c.id}
+                  consulta={c}
+                  pacienteNome={nomePaciente(c.pacienteId)}
+                  unidadeNome={nomeUnidade(c.unidadeId)}
+                />
               ))}
             </div>
 
@@ -76,30 +90,30 @@ export default function Consultas() {
                 <caption className="sr-only">Lista de consultas</caption>
                 <thead className="bg-slate-100 text-slate-700">
                   <tr>
-                    <th scope="col" className="w-[22%] px-3 py-3">Data e hora</th>
-                    <th scope="col" className="w-[22%] px-3 py-3">Especialidade</th>
-                    <th scope="col" className="w-[11%] px-3 py-3">Paciente</th>
-                    <th scope="col" className="w-[11%] px-3 py-3">Unidade</th>
-                    <th scope="col" className="w-[8%] px-3 py-3">Van</th>
-                    <th scope="col" className="w-[14%] px-3 py-3">Status</th>
-                    <th scope="col" className="w-[12%] px-3 py-3">
+                    <th scope="col" className="w-[15%] px-3 py-3">Data e hora</th>
+                    <th scope="col" className="w-[16%] px-3 py-3">Especialidade</th>
+                    <th scope="col" className="w-[19%] px-3 py-3">Paciente</th>
+                    <th scope="col" className="w-[19%] px-3 py-3">Unidade</th>
+                    <th scope="col" className="w-[7%] px-3 py-3">Van</th>
+                    <th scope="col" className="w-[13%] px-3 py-3">Status</th>
+                    <th scope="col" className="w-[11%] px-3 py-3">
                       <span className="sr-only">Ações</span>
                     </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-200">
                   {consultas.map((c) => (
-                    <tr key={c.idConsulta}>
+                    <tr key={c.id}>
                       <td className="px-3 py-3">{formatarDataHora(c.dataHora)}</td>
                       <td className="break-words px-3 py-3 font-medium">{c.especialidade}</td>
-                      <td className="px-3 py-3">#{c.idPaciente}</td>
-                      <td className="px-3 py-3">#{c.idUnidade}</td>
+                      <td className="break-words px-3 py-3">{nomePaciente(c.pacienteId)}</td>
+                      <td className="break-words px-3 py-3">{nomeUnidade(c.unidadeId)}</td>
                       <td className="px-3 py-3">{rotuloTransporte(c.precisaTransporte)}</td>
                       <td className="px-3 py-3">
                         <StatusBadge status={c.status} />
                       </td>
                       <td className="px-3 py-3">
-                        <Link to={`/consultas/${c.idConsulta}`} className="font-semibold text-brand-700 underline">
+                        <Link to={`/consultas/${c.id}`} className="font-semibold text-brand-700 underline">
                           Detalhes
                         </Link>
                       </td>
