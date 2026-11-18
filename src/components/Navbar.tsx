@@ -28,8 +28,8 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-20 border-b border-slate-200 bg-white">
       <nav aria-label="Principal" className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-        <Link to="/" className="text-2xl font-bold tracking-tight text-brand-700">
-          Embarca<span className="text-slate-900">Aí</span>
+        <Link to="/" className="inline-flex items-center" aria-label="EmbarcaAí, página inicial">
+          <img src="/logo.png" alt="Logo EmbarcaAí" width={173} height={58} className="h-10 w-auto sm:h-12" />
         </Link>
 
         <button
