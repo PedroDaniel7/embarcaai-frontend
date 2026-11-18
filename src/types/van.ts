@@ -1,6 +1,6 @@
-/** TODO: conferir os campos com a tabela de vans do Oracle. */
+/** GET /vans. */
 export interface Van {
-  idVan: number
+  id: number
   placa: string
   capacidade: number
 }

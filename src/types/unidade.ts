@@ -1,6 +1,7 @@
-/** TODO: conferir os campos com a tabela de unidades do Oracle. */
+/** GET /unidades. */
 export interface UnidadeSaude {
-  idUnidade: number
+  id: number
   nome: string
+  tipo: string
   cidade: string
 }

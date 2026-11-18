@@ -1,7 +1,8 @@
-/** TODO: conferir os campos com a tabela de pacientes do Oracle. */
+/** GET /pacientes. zonaRural: "S" ou "N". */
 export interface Paciente {
-  idPaciente: number
+  id: number
   nome: string
   telefone: string
-  dataNascimento?: string
+  dataNascimento: string
+  zonaRural: 'S' | 'N'
 }
