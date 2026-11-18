@@ -7,8 +7,11 @@ interface EstadoFetch<T> {
   recarregar: () => void
 }
 
-/** Executa uma função assíncrona (ex.: serviço da API) e expõe loading, erro e dados. */
-export function useFetch<T>(buscar: () => Promise<T>): EstadoFetch<T> {
+/**
+ * Executa uma função assíncrona (ex.: serviço da API) e expõe loading, erro e dados.
+ * `deps` são valores que, ao mudar, refazem a busca (ex.: o id da rota).
+ */
+export function useFetch<T>(buscar: () => Promise<T>, deps: unknown[] = []): EstadoFetch<T> {
   const [dados, setDados] = useState<T | null>(null)
   const [carregando, setCarregando] = useState(true)
   const [erro, setErro] = useState<string | null>(null)
@@ -33,9 +36,9 @@ export function useFetch<T>(buscar: () => Promise<T>): EstadoFetch<T> {
     return () => {
       cancelado = true
     }
-    // `buscar` é recriado a cada render; o gatilho é apenas a tentativa.
+    // `buscar` é recriado a cada render; o gatilho é a tentativa ("tentar de novo") e as deps.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tentativa])
+  }, [tentativa, ...deps])
 
   const recarregar = useCallback(() => setTentativa((n) => n + 1), [])
 
