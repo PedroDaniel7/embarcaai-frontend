@@ -71,7 +71,7 @@ A API roda no plano gratuito do Render: a primeira chamada depois de um tempo pa
 ## Links
 
 - GitHub: https://github.com/PedroDaniel7/embarcaai-frontend
-- Vercel: TODO (link da aplicação publicada)
+- Vercel: https://embarcaai-frontend.vercel.app
 - API Java (Render): https://embarcaai-api.onrender.com
 - Vídeo no YouTube: TODO (link do vídeo de até 3 minutos)
 
