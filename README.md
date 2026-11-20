@@ -72,7 +72,7 @@ A API roda no plano gratuito do Render: a primeira chamada depois de um tempo pa
 
 - GitHub: https://github.com/PedroDaniel7/embarcaai-frontend
 - Vercel: https://embarcaai-frontend.vercel.app
-- API Java (Render): https://embarcaai-api.onrender.com
+- API Java (Render): https://embarcaai-api.onrender.com (a raiz não tem página; teste em https://embarcaai-api.onrender.com/consultas)
 - Vídeo no YouTube: https://www.youtube.com/watch?v=03UWRTG5Jxw
 
 ## Integrantes
@@ -88,8 +88,8 @@ A API roda no plano gratuito do Render: a primeira chamada depois de um tempo pa
 ## Uso de IA
 
 - **Ferramenta:** Claude (Anthropic), via Claude Code e via chat.
-- **Onde foi usado neste projeto:** geração e revisão do código do front-end (React, TypeScript e Tailwind), integração com a API Java, depuração (incluindo um bug do ModelMapper na API, encontrado em teste de integração), auditoria das entregas segundo a rubrica, planejamento e revisão de textos e documentos.
-- **Como foi validado:** o código foi lido, executado e testado pela equipe contra a API real. Erros da IA foram corrigidos pela equipe; por exemplo, ela chegou a assumir um endpoint de contato que a API não tem e uma contagem de commits que não batia com a rubrica.
+- **Onde foi usado neste projeto:** geração e revisão do código do front-end (React, TypeScript e Tailwind), integração com a API Java, depuração (incluindo a correção de um bug do ModelMapper na API), auditoria das entregas segundo a rubrica, planejamento e revisão de textos e documentos.
+- **Como foi validado:** o código foi lido, executado e testado pela equipe contra a API real, incluindo o registro de consultas. Erros da IA foram corrigidos pela equipe; por exemplo, ela chegou a assumir um endpoint de contato que a API não tem.
 
 O registro completo de uso de IA de todas as disciplinas está no documento de Software Engineering and Business Model.
 
